@@ -26,9 +26,11 @@ public class MainApplication extends Application implements ReactApplication {
       );
     }
 
+//    相对于ReactNative项目的目录
+//    ===>AwesomProject/js/index.js 所有的组件需要在该处进行注册
     @Override
     protected String getJSMainModuleName() {
-      return "index";
+      return "js/index";
     }
   };
 
