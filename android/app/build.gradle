@@ -71,12 +71,13 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
-
+//
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "./js/index.js"
 ]
 
-apply from: "../../node_modules/react-native/react.gradle"
+//apply from: "../../node_modules/react-native/react.gradle"
+apply from: "./react.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -91,11 +92,12 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
 
     defaultConfig {
         applicationId "com.awesomeproject"

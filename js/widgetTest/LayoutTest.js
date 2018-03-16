@@ -7,6 +7,9 @@ import {
     Alert,
     ScrollView,
     Image,
+
+    FlatList,
+    SectionList,
     ToastAndroid,
 
     TouchableHighlight,
@@ -169,7 +172,7 @@ export class ScrollViewLayout extends Component {
 
 // ScrollView 嵌入ScrollView 默认效果为内层ScrollView默认展开
 // 限制内层ScrollView 大小时,内层的ScrollView无法滑动 且内容会出现显示不全
-export  class ScrollViewInScrollView extends Component {
+export class ScrollViewInScrollView extends Component {
     render() {
         return (
             <ScrollView style={{backgroundColor: 'skyblue'}}>
@@ -179,7 +182,7 @@ export  class ScrollViewInScrollView extends Component {
                 <Text style={{fontSize: 50}}>I am a Scroll Text 2</Text>
                 <Image style={{height: 100, width: 200}}
                        source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
-                <ScrollView style={{height:500}}>
+                <ScrollView style={{height: 500}}>
                     <Text style={{fontSize: 50}}>I am a Scroll Text 3___InnerScrollViewStart</Text>
                     <Image style={{height: 100, width: 200}}
                            source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
@@ -230,14 +233,94 @@ export  class ScrollViewInScrollView extends Component {
     }
 }
 
-export default class ScrollView2Zoom extends Component{
-    render(){
-        return(
-            <ScrollView maxmunZoomScale={10} minimumZoomScale={2} style={{backgroundColor:'skyblue'}}>
-                <Image style={{height: 100, width: 200}}
-                       source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
-            </ScrollView>
+//第一个ScrollView实现了横向的scroll page分页滑动功能 且目前只能支持横向的滑动功能 需要Item占满一屏之后才可以进行横向的滑动
+export class ScrollView2Zoom extends Component {
+    render() {
+        return (
+            <View>
+                <ScrollView pagingEnabled={true} style={{backgroundColor: 'skyblue', height: 100}} horizontal={true}>
+                    <Image style={{height: 100, width: 200}}
+                           source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
+
+                    <Image style={{height: 100, width: 200}}
+                           source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
+                    <Image style={{height: 100, width: 200}}
+                           source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
+                    <Image style={{height: 100, width: 200}}
+                           source={{uri: 'https://www.baidu.com/img/superlogo_c4d7df0a003d3db9b65e9ef0fe6da1ec.png'}}/>
+                </ScrollView></View>
+
         )
+    }
+}
+
+function generateNormalListData() {
+    let array = [];
+    for (let i = 0; i < 1000; i++) {
+        array[i] = {key: `Hello I am ${i}`}
+    }
+    return array;
+}
+let normalListData = generateNormalListData();
+
+function generatSectionListData() {
+    let array = [];
+    for (let i = 0;i<100;i++){
+        let item =[];
+        for (let j=0;j<10;j++){
+            item[j] = {key:`I am Child i: ${i} j:${j}`}
+        }
+        array[i] = {title:`I am title: ${i}`,data:item}
+    }
+    return array;
+}
+
+let sectionListData = generatSectionListData();
+//每次滑动到底部只渲染一屏元素 然后就不能滑动(卡顿）需要再次触发滑动才可以滑动
+//向反方向fling的时候会出现白屏的现象，等fling停止之后才开始渲染元素
+export class FlatListComponent extends Component {
+
+
+    render() {
+        return (
+            <View>
+                <FlatList data={normalListData}
+                          style={{height: 400, backgroundColor: 'skyblue'}}
+                          renderItem={
+                              ({item, index}) => {
+                                  if (index % 5 === 0) {
+                                      return <Text style={{height: 20,backgroundColor:'yellow'}}> ${item.key} index is ${index} type =0</Text>
+                                  }
+                                  else if (index % 5 === 1) {
+                                      return <Text style={{height: 40,backgroundColor:'red'}}> ${item.key} index is ${index} type=1</Text>
+
+                                  }
+                                  else {
+                                      return <Text style={{height: 40,backgroundColor:'blue'}}> ${item.key} index is ${index} type=others</Text>
+
+                                  }
+                              }
+                          }
+                />
+            </View>
+        )
+    }
+}
+//分组列表也会出现卡顿的问题
+export default class SectionListComponent extends Component{
+    render(){
+        var content = <View>
+            <SectionList style={{height:400}}
+                         sections={sectionListData}
+                         renderItem={({item,index})=>{
+                             return <Text>I am child ${item.key} index:${index}</Text>
+                         }}
+                         renderSectionHeader={({section})=>{
+                             return <Text>I am Section ${section.title}</Text>
+                         }}
+            />
+        </View>;
+        return content;
     }
 }
 
