@@ -1,3 +1,4 @@
+//react gradle 打包配置的相关代码
 import org.apache.tools.ant.taskdefs.condition.Os
 
 def config = project.hasProperty("react") ? project.react : [];
