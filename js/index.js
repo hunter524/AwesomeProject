@@ -10,7 +10,8 @@ import AnimatedScrollView from "./Animated/AnimatedScrollView"
 import FlexLayoutTest from './widgetTest/FlexLayout'
 import TextInputTest from './widgetTest/TextInput'
 import ScrollViewTest from './widgetTest/ScrollView'
+import ListViewTest from './widgetTest/ListView'
 
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>ScrollViewTest);
+AppRegistry.registerComponent('WidgetTest',()=>ListViewTest);

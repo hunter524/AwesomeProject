@@ -71,9 +71,13 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
-
+//这边为什么不能修改为 ./js/index.js 而是要在MainApplication中修改这个属性
+//    @Override
+//    protected String getJSMainModuleName() {
+//      return "js/index";
+//    }
 project.ext.react = [
-    entryFile: "./js/index.js"
+    entryFile: "index.js"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -94,9 +98,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
-
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     defaultConfig {
         applicationId "com.awesomeproject"
