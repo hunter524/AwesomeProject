@@ -266,7 +266,7 @@ function GeneratorFunction() {
 
 //探究javaScript是否整的可以支持并发调用
 var fs = require('fs');
-
+var co = require('co')
 function concurrentFunction() {
     // fs.readFile('./es6-grammar.js',null,function (error, data) {
     //     console.log(data.toString());
@@ -274,47 +274,74 @@ function concurrentFunction() {
     // //先执行该console再执行 输出文件内容
     // console.log("end read!");
 
-    function* concurrentgenetor() {
-        var res = yield [
-            new Promise(function (resolve, reject) {
-                console.log("start Promise1");
-                var i = 0;
-                while (i < 1000000000) {
-                    i += Math.random() * 10 % 10
-                }
-                resolve("Promise1" + i);
-                console.log("Promise1 finish!");
-            }),
-            new Promise(function (resolve, reject) {
-                console.log("start Promise2");
-                var i = 0;
-                while (i < 1000000000) {
-                    i += Math.random() * 10 % 10
-                }
-                resolve("Promise2" + i);
-                console.log("Promise2 finish!");
-            })];
+    //==============================并发执行模块的测试========================
+    // function* concurrentgenetor() {
+    //     var res = yield [
+    //         new Promise(function (resolve, reject) {
+    //             console.log("start Promise1");
+    //             var i = 0;
+    //             while (i < 1000000000) {
+    //                 i += Math.random() * 10 % 10
+    //             }
+    //             resolve("Promise1" + i);
+    //             console.log("Promise1 finish!");
+    //         }),
+    //         new Promise(function (resolve, reject) {
+    //             console.log("start Promise2");
+    //             var i = 0;
+    //             while (i < 1000000000) {
+    //                 i += Math.random() * 10 % 10
+    //             }
+    //             resolve("Promise2" + i);
+    //             console.log("Promise2 finish!");
+    //         })];
+    //
+    //     console.log("res:"+res);
+    // }
+    //
+    // var concurrentgenetor1 = concurrentgenetor();
+    // //单次循环4s
+    // console.log("start time"+new Date().toLocaleTimeString());
+    // var i = 0;
+    // while (i < 1000000000) {
+    //     i += Math.random() * 10 % 10
+    // }
+    // console.log("end time"+new Date().toLocaleTimeString());
+    //
+    // //用yield让出执行权 再去执行还是需要8s
+    // console.log("start time"+new Date().toLocaleTimeString());
+    // var value = concurrentgenetor1.next().value;
+    // console.log("end time"+new Date().toLocaleTimeString());
+    //
+    // console.log(value)
 
-        console.log("res:"+res);
-    }
 
-    var concurrentgenetor1 = concurrentgenetor();
-    //单次循环4s
-    console.log("start time"+new Date().toLocaleTimeString());
-    var i = 0;
-    while (i < 1000000000) {
-        i += Math.random() * 10 % 10
-    }
-    console.log("end time"+new Date().toLocaleTimeString());
+//    ============================Stream 模块的测试==================================
+    var readStream = fs.createReadStream('./LesMiserables.txt');
+    let valjeanCount = 0;
+    let loopCount = 0;
+    co(function* () {
+        while (true) {
+            const res = yield Promise.race([
+                new Promise(resolve => readStream.once('data',resolve)),
+                new Promise(resolve => readStream.once('end',resolve)),
+                new Promise((resolve,reject)=> readStream.once('error',reject)),
+            ]);
+            loopCount++;
+            if (!res){
+                break;
+            };
+            readStream.removeAllListeners('data');
+            readStream.removeAllListeners('end');
+            readStream.removeAllListeners('error');
+            valjeanCount += (res.toString().match(/valjean/ig) || []).length;
+        }
+        //累计1119个字符 读取该文件进行了52次 循环
+        console.log('count:'+valjeanCount + 'loopCount:'+loopCount);
 
-    //用yield让出执行权 再去执行还是需要8s
-    console.log("start time"+new Date().toLocaleTimeString());
-    var value = concurrentgenetor1.next().value;
-    console.log("end time"+new Date().toLocaleTimeString());
-
-    console.log(value)
-
-
+    });
+    //js 只有一个线程 读取主线程 优先完成任务
+    console.log("main loop end!")
 
 
 }
