@@ -267,6 +267,7 @@ function GeneratorFunction() {
 //探究javaScript是否整的可以支持并发调用
 var fs = require('fs');
 var co = require('co')
+
 function concurrentFunction() {
     // fs.readFile('./es6-grammar.js',null,function (error, data) {
     //     console.log(data.toString());
@@ -323,37 +324,106 @@ function concurrentFunction() {
     co(function* () {
         while (true) {
             const res = yield Promise.race([
-                new Promise(resolve => readStream.once('data',resolve)),
-                new Promise(resolve => readStream.once('end',resolve)),
-                new Promise((resolve,reject)=> readStream.once('error',reject)),
+                new Promise(resolve => readStream.once('data', resolve)),
+                new Promise(resolve => readStream.once('end', resolve)),
+                new Promise((resolve, reject) => readStream.once('error', reject)),
             ]);
             loopCount++;
-            if (!res){
+            if (!res) {
                 break;
-            };
+            }
+            ;
             readStream.removeAllListeners('data');
             readStream.removeAllListeners('end');
             readStream.removeAllListeners('error');
             valjeanCount += (res.toString().match(/valjean/ig) || []).length;
         }
         //累计1119个字符 读取该文件进行了52次 循环
-        console.log('count:'+valjeanCount + 'loopCount:'+loopCount);
+        console.log('count:' + valjeanCount + 'loopCount:' + loopCount);
 
     });
     //js 只有一个线程 读取主线程 优先完成任务
-    console.log("main loop end!")
+    console.log("main loop end!");
+
+    require('async')
+
+    var Worker = require("webworker-threads").Worker;
+    function nodeWorker() {
+        var worker = new Worker(function () {
+            let threadId = 0;
+
+            postMessage("Worker start!");
+            // sleep();
+            this.onmessage = function(event){
+                console.log("worker handler start!");
+                // sleep();
+                ++threadId;
+                var startTime = new Date().getTime();
+                console.log(`start sleep fake Thread id: ${threadId}`);
+                var i = 0;
+                while (i < 1000000000) {
+                    i += Math.random() * 10 % 10
+                }
+                var endTime = new Date().getTime();
+                console.log(`end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
+                console.log("worker handler end!");
+                postMessage("resolved worker:"+event.data);
+            };
+        });
+
+        worker.onmessage=function (event) {
+            console.log("message from worker:"+event.data);
+        };
 
 
-}
+        console.log('main finish');
+        worker.postMessage('1');
+
+
+        // setTimeout(function () {
+        //     console.log("call post!");
+        //     worker.postMessage('1');
+        // },1000);
+
+        // setTimeout(function () {
+        //     console.log("main thread doesn't blocked!");
+        // },2000)
+
+        // setTimeout(function () {
+        //     console.log("main thread doesn't blocked!");
+        //     worker.postMessage('2');
+        // },4000)
+
+        sleep();
+        worker.postMessage('2');
+
+
+    }
 
 
 //=====================================Main部分================================//
-function main() {
-    // mainSymbol();
-    // mainClass();
-    // PromiseFunction();
-    // GeneratorFunction();
-    concurrentFunction();
-}
+    function main() {
+        // mainSymbol();
+        // mainClass();
+        // PromiseFunction();
+        // GeneratorFunction();
+        // concurrentFunction();
+        nodeWorker();
+    }
 
-main();
+    main();
+
+    global.fakeSleepThreadId = 0;
+
+    function sleep() {
+        var threadId = ++global.fakeSleepThreadId;
+        var startTime = new Date().getTime();
+        console.log(`start sleep fake Thread id: ${threadId}`);
+        var i = 0;
+        while (i < 1000000000) {
+            i += Math.random() * 10 % 10
+        }
+        var endTime = new Date().getTime();
+        console.log(`out end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
+    }
+}
