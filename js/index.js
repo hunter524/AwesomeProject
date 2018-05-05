@@ -11,7 +11,10 @@ import FlexLayoutTest from './widgetTest/FlexLayout'
 import TextInputTest from './widgetTest/TextInput'
 import ScrollViewTest from './widgetTest/ScrollView'
 import ListViewTest from './widgetTest/ListView'
+import Fetch from './NetWork/Fetch'
+import NavigatorAndScene from './widgetTest/NavigatorAndScene'
+import TouchResponder from './TouchResponder/TouchResponder'
 
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>ListViewTest);
+AppRegistry.registerComponent('WidgetTest',()=>TouchResponder);

@@ -344,86 +344,90 @@ function concurrentFunction() {
     });
     //js 只有一个线程 读取主线程 优先完成任务
     console.log("main loop end!");
+}
 
-    require('async')
+var Worker = require("webworker-threads").Worker;
+function nodeWorker() {
+    var worker = new Worker(function () {
+        let threadId = 0;
 
-    var Worker = require("webworker-threads").Worker;
-    function nodeWorker() {
-        var worker = new Worker(function () {
-            let threadId = 0;
-
-            postMessage("Worker start!");
+        postMessage("Worker start!");
+        // sleep();
+        this.onmessage = function(event){
+            console.log("worker handler start!");
             // sleep();
-            this.onmessage = function(event){
-                console.log("worker handler start!");
-                // sleep();
-                ++threadId;
-                var startTime = new Date().getTime();
-                console.log(`start sleep fake Thread id: ${threadId}`);
-                var i = 0;
-                while (i < 1000000000) {
-                    i += Math.random() * 10 % 10
-                }
-                var endTime = new Date().getTime();
-                console.log(`end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
-                console.log("worker handler end!");
-                postMessage("resolved worker:"+event.data);
-            };
-        });
-
-        worker.onmessage=function (event) {
-            console.log("message from worker:"+event.data);
+            ++threadId;
+            var startTime = new Date().getTime();
+            console.log(`start sleep fake Thread id: ${threadId}`);
+            var i = 0;
+            while (i < 1000000000) {
+                i += Math.random() * 10 % 10
+            }
+            var endTime = new Date().getTime();
+            console.log(`end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
+            console.log("worker handler end!");
+            postMessage("resolved worker:"+event.data);
         };
+    });
+
+    worker.onmessage=function (event) {
+        console.log("message from worker:"+event.data);
+    };
 
 
-        console.log('main finish');
-        worker.postMessage('1');
+    console.log('main finish');
+    worker.postMessage('1');
 
 
-        // setTimeout(function () {
-        //     console.log("call post!");
-        //     worker.postMessage('1');
-        // },1000);
+    // setTimeout(function () {
+    //     console.log("call post!");
+    //     worker.postMessage('1');
+    // },1000);
 
-        // setTimeout(function () {
-        //     console.log("main thread doesn't blocked!");
-        // },2000)
+    // setTimeout(function () {
+    //     console.log("main thread doesn't blocked!");
+    // },2000)
 
-        // setTimeout(function () {
-        //     console.log("main thread doesn't blocked!");
-        //     worker.postMessage('2');
-        // },4000)
+    // setTimeout(function () {
+    //     console.log("main thread doesn't blocked!");
+    //     worker.postMessage('2');
+    // },4000)
 
-        sleep();
-        worker.postMessage('2');
+    sleep();
+    worker.postMessage('2');
 
 
-    }
+}
 
 
 //=====================================Main部分================================//
-    function main() {
-        // mainSymbol();
-        // mainClass();
-        // PromiseFunction();
-        // GeneratorFunction();
-        // concurrentFunction();
-        nodeWorker();
+function main() {
+    // mainSymbol();
+    // mainClass();
+    // PromiseFunction();
+    // GeneratorFunction();
+    // concurrentFunction();
+    nodeWorker();
+    flowTest(22)
+}
+
+main();
+
+global.fakeSleepThreadId = 0;
+
+
+function flowTest(num:number) {
+    console.log(num);
+}
+
+function sleep() {
+    var threadId = ++global.fakeSleepThreadId;
+    var startTime = new Date().getTime();
+    console.log(`start sleep fake Thread id: ${threadId}`);
+    var i = 0;
+    while (i < 1000000000) {
+        i += Math.random() * 10 % 10
     }
-
-    main();
-
-    global.fakeSleepThreadId = 0;
-
-    function sleep() {
-        var threadId = ++global.fakeSleepThreadId;
-        var startTime = new Date().getTime();
-        console.log(`start sleep fake Thread id: ${threadId}`);
-        var i = 0;
-        while (i < 1000000000) {
-            i += Math.random() * 10 % 10
-        }
-        var endTime = new Date().getTime();
-        console.log(`out end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
-    }
+    var endTime = new Date().getTime();
+    console.log(`out end sleep fake Thread id: ${threadId} sleep time ${endTime - startTime} i: ${i} startTime ${startTime} endTime:${endTime}`);
 }
