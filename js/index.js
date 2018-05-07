@@ -12,9 +12,10 @@ import TextInputTest from './widgetTest/TextInput'
 import ScrollViewTest from './widgetTest/ScrollView'
 import ListViewTest from './widgetTest/ListView'
 import Fetch from './NetWork/Fetch'
-import NavigatorAndScene from './widgetTest/NavigatorAndScene'
+import NavigatorAndScene from './widgetTest/DeprecatedNavigatorAndScene'
 import TouchResponder from './TouchResponder/TouchResponder'
+import ReactNavigation from'./widgetTest/ReactNavigation'
 
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>TouchResponder);
+AppRegistry.registerComponent('WidgetTest',()=>ReactNavigation);
