@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, PanResponder, Text} from 'react-native'
+import {View, PanResponder, Text,ScrollView,Image} from 'react-native'
 
 
 export default class TouchResponder extends React.Component {
@@ -21,15 +21,15 @@ export default class TouchResponder extends React.Component {
                   onMoveShouldSetResponderCapture={(event) => true}
                   onResponderMove={(event) => {
                       event = event.nativeEvent;
-                      var e = `onResponderMove position is move x:${event.locationX} y:${event.pageY}`;
+                      var e = `onResponderMove position is move x:${event.pageX} y:${event.pageY}`;
                       console.log(e);
-                      this.setState({
-                          position: e
-                      })
+                      // this.setState({
+                      //     position: e
+                      // })
                   }}
                   onResponderGrant={(event) => {
                       event = event.nativeEvent;
-                      var e = `onResponderGrant position is move x:${event.loactionX} y:${event.pageY}`;
+                      var e = `onResponderGrant position is move x:${event.pageX} y:${event.pageY}`;
                       console.log(e);
                       this.setState({
                           position: e
@@ -37,7 +37,7 @@ export default class TouchResponder extends React.Component {
                   }}
                   onResponderReject={(event) => {
                       event = event.nativeEvent;
-                      var e = `onResponderReject position is move x:${event.loactionX} y:${event.pageY}`;
+                      var e = `onResponderReject position is move x:${event.pageX} y:${event.pageY}`;
                       console.log(e);
                       this.setState({
                           position: e

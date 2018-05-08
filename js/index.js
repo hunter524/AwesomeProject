@@ -15,7 +15,9 @@ import Fetch from './NetWork/Fetch'
 import NavigatorAndScene from './widgetTest/DeprecatedNavigatorAndScene'
 import TouchResponder from './TouchResponder/TouchResponder'
 import ReactNavigation from'./widgetTest/ReactNavigation'
+import ResponderWithAnimated from './TouchResponder/ResponderWithAnimated'
+import LayoutAnimationComponent from './TouchResponder/LayoutAnimationComponent'
 
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>ReactNavigation);
+AppRegistry.registerComponent('WidgetTest',()=>LayoutAnimationComponent);
