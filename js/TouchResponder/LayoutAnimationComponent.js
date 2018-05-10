@@ -25,6 +25,10 @@ export default class LayoutAnimationComponent extends React.Component{
                         width:this.state.width+15,
                     })
                 }}/>
+                <Button title="test" onPress={()=>{
+                    //BatchedBridge 中的MessageQueue对象在全局的引用
+                    console.log(global.__fbBatchedBridge.configurable);
+                }}/>
             </View>
         )
     }

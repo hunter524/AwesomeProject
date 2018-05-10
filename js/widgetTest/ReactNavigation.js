@@ -22,7 +22,8 @@ class HomeComponent extends React.Component {
                     //携带参数的界面跳转
                     this.props.navigation.navigate("Detail", {name: 'Home Sub Detail'})
                 }}/>
-                <Image source={{uri:'ic_launcher'}} style={{height:40,width:40}}/>
+                {/*todo://为什么无法加载assets 或者drawable 目录下面的图片*/}
+                <Image source={{uri:'file://android_asset/ic_launcher.png'}} style={{height:40,width:40}}/>
                 <ScrollView style={{maximumZoomScale:'500%',minimumZoomScale:'200%'}}>
                     <Text >Scale Scale Scale</Text>
                 </ScrollView>

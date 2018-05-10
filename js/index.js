@@ -17,7 +17,8 @@ import TouchResponder from './TouchResponder/TouchResponder'
 import ReactNavigation from'./widgetTest/ReactNavigation'
 import ResponderWithAnimated from './TouchResponder/ResponderWithAnimated'
 import LayoutAnimationComponent from './TouchResponder/LayoutAnimationComponent'
+import TouchableWidgets from './TouchResponder/Touchable'
 
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>LayoutAnimationComponent);
+AppRegistry.registerComponent('WidgetTest',()=>TouchableWidgets);

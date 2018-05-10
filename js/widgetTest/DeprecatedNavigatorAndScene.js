@@ -16,7 +16,7 @@ class OddNumberScene extends React.Component {
     render() {
         return (
             <View style={{flexDirection: 'column'}}>
-                <Text>I am Odd number: {this.props.number} time: {this.state.createTime}</Text>
+                <Text style={{backgroundColor:'lightblue'}}>I am Odd number: {this.props.number} time: {this.state.createTime}</Text>
                 <Button title="Forward Scene" onPress={() => {
                     this.props.forward.call(null,++this.props.number)
                 }}/>
@@ -43,7 +43,8 @@ class EvenNumberScene extends React.Component {
     render() {
         return (
             <View style={{flexDirection: 'column'}}>
-                <Text>I am even number: {this.props.number} time: {this.state.createTime}</Text>
+                <Text style={{backgroundColor:'white'}}>I am even number: {this.props.number} time: {this.state.createTime}</Text>
+                {/*11222*/}
                 <Button title="Forward" onPress={() => {
                     this.props.forward.call(null,++this.props.number)
                 }}/>
@@ -69,24 +70,29 @@ export default class SceneComponent extends React.Component<Props> {
             <Navigator initialRoute={{number: 0,index:0}} renderScene={(route, navigator) => {
 
                 var forward = (num) => {
-                    console.log(`forward num: ${num}`)
+                    console.log(`forward num: ${num}`);
                     navigator.push({number: num, index: num})
                 };
 
                 var backward = () => {
-                    console.log(`back ward: ${route.index}`)
+                    console.log(`back ward: ${route.index}`);
                     if (route.number > 0) {
                         navigator.pop();
                     }
                 };
-                console.log(`router num: ${route.number}`)
+                console.log(`router num: ${route.number}`);
                 if (route.number % 2 === 0) {
                     return <EvenNumberScene number={route.number} forward={forward} backWard={backward}/>
                 }
                 else {
                     return <OddNumberScene number={route.number} forward={forward} backWard={backward}/>
                 }
-            }}/>
+            }}
+                       iconfigureScene={(route)=>{
+                           return Navigator.SceneConfigs.PushFromRight;
+                       }}
+
+            />
         )
     }
 
