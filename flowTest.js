@@ -8,5 +8,5 @@ function add(num1:number,num2:number) {
     console.log(`add result is ${number}`)
 }
 
-// add('22','33');
-add(1,1);
+add('22','33');
+// add(1,1);
