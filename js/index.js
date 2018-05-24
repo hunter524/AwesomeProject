@@ -21,9 +21,10 @@ import TouchableWidgets from './TouchResponder/Touchable'
 import SelectAddAccountTypePage from './add_acc_type_selected/SelectAddAccountTypePage'
 import AnimatedType from'./Animated/AnimatedType'
 import TimerDifference from "./Timer/TimerDifference";
+import RNScrollableTabView from "./widgetTest/RNScrollableTabView"
 
 AppRegistry.registerComponent('HelloWorld', () => HelloWorld);
-AppRegistry.registerComponent('WidgetTest',()=>SelectAddAccountTypePage);
+AppRegistry.registerComponent('WidgetTest',()=>RNScrollableTabView);
 
 
 //添加全局的耗时操作 模拟执行耗时任务

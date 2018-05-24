@@ -73,7 +73,7 @@ export default class TimerDifference extends React.Component {
 
 //使用react-timer-mixin 避免组件被卸载时Timer没有被卸载导致的错误
 //todo: 暂时未实现通过refs模拟Timer未被清除导致的崩溃问题
-class TimerAfterUnMountComponent extends React.Component{
+class TimerAfterUnMountComponent extends React.PureComponent{
         constructor(props){
         super(props);
         this.refText = React.createRef();
@@ -83,17 +83,31 @@ class TimerAfterUnMountComponent extends React.Component{
     }
 
     componentDidMount(){
-        setInterval(()=>{
-            this.setState({
-                time:new Date().toLocaleTimeString(),
-            });
-            // this.refText.current.title=new Date().toLocaleTimeString();
-        },1000)
+        this.interval = setInterval(this.updateTimer.bind(this),1000);
+    }
+
+    componentWillUnmount(){
+            clearInterval(this.interval);
+    }
+
+    //setInterval 传入的function需要绑定this对象，用()=>{}语法生成的function无法绑定this对象
+    updateTimer(){
+        //    如果不使用React.PureComponent 则即使每次setState没有改变属性值也会导致页面被重新渲染了
+        //    如果使用PureComponent则State未发生改变 则不会调用render方法
+        this.setState({
+            // time:new Date().toLocaleTimeString(),
+        });
+        // todo://会报错is not a function
+        // this.refText.setNativeProps({
+        //     title:new Date().toLocaleTimeString(),
+        // })
+
+        this.refText.getDOMNode()
     }
 
     render(){
         return(
-            <Text ref={this.refText}>{this.state.time}</Text>
+            <Button ref={this.refText} title={new Date().toLocaleTimeString()}/>
         );
     }
 }

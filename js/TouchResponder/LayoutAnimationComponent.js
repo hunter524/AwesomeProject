@@ -19,6 +19,8 @@ export default class LayoutAnimationComponent extends React.Component{
             <View style={{flex:1,flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
                 <View style={{height:this.state.height,width:this.state.width,backgroundColor:'lightblue'}}/>
                 <Button title="Bigger" onPress={()=>{
+                    //LayoutAnimation是一次布局改变的视图，当布局界面大小改变时，触发该动画
+                    //且动画不可以被取消
                     LayoutAnimation.spring();
                     this.setState({
                         height:this.state.height+15,
