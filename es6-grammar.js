@@ -407,8 +407,8 @@ function main() {
     // PromiseFunction();
     // GeneratorFunction();
     // concurrentFunction();
-    nodeWorker();
-    flowTest(22)
+    // nodeWorker();
+    // flowTest(22)
 }
 
 main();

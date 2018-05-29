@@ -54,7 +54,9 @@ class ListViewTest extends React.Component {
                               backgroundColor: 'yellow',
                               marginTop: 20
                           }}>{rowData}</Text>
-                      }}>
+                      }}
+                      refreshControl={}
+            >
 
             </ListView>
         );

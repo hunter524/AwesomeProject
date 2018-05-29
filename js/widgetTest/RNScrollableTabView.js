@@ -1,5 +1,6 @@
 import React from 'react'
 import ScrollableTabView,{DefaultTabBar,ScrollableTabBar} from 'react-native-scrollable-tab-view'
+import Proptypes from 'prop-types'
 import {Text,View,ART} from 'react-native'
 const {Surface,Shape,Path} = ART;
 
@@ -21,7 +22,7 @@ export default class RNScrollableTabView extends React.Component{
             (preState)=>{
                 return {i:++preState.i}
             }
-        )},16)
+        )},16);
     }
 
 
@@ -53,4 +54,7 @@ export default class RNScrollableTabView extends React.Component{
             </ScrollableTabView>
         )
     }
+}
+RNScrollableTabView.propTypes={
+    title:PropTypes.bool,
 }
