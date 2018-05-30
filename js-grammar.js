@@ -1,3 +1,5 @@
+var {compose,curry}= require("lodash"); //柯里化的库
+
 var fs = require("fs");
 var btoa = require("buffer");
 var atob = require("buffer");
@@ -419,7 +421,7 @@ String ';
     console.log(`encode ${base64Encode} decode ${decodeBase64}`)
 }
 
-function objectFeature() {
+function objectFeatureinAndOf() {
     var o1 = {
         '123k': '123v', '1 2k': '1 2v', fun: function () {
             console.log('I am a fun in o1');
@@ -1125,6 +1127,22 @@ function objectFeature() {
     console.log(slice, slicedArray)
 }
 
+function objectFunction() {
+    var of={
+        num:1,
+    };
+    var freezeOf = Object.freeze(of);
+    console.log(freezeOf.num);
+    //freeze 之后的变量无法更改依旧是 1
+    freezeOf.num=3;
+    console.log(freezeOf.num);
+    //freeze之后的变量无法添加新的属性
+    freezeOf.num2= 3;
+    console.log(freezeOf.num2);
+
+}
+
+
 //prototype __proto__ 对象继承的关系
 function typeFeature() {
     function Cat(name) {
@@ -1546,6 +1564,10 @@ function strictFeature() {
 
 }
 
+function functionProgramer() {
+    _.compose()
+}
+
 class Class {
     constructor() {
         console.log("constructor")
@@ -1573,8 +1595,10 @@ class Class {
 // operatorFeature();
 // conversionFeature();
 // codeStyleFeature();
-// objectFeature();
+// objectFeatureinAndOf();
 // typeFeature();
 // extendsFeature();
 // asyncFeature();
-strictFeature();
+// strictFeature();
+// objectFunction();
+functionProgramer();

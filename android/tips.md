@@ -102,6 +102,10 @@ Dispatcher中的每一个Register的Action触发的Store更新的回调均会被
    - JS[函数式编程](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
 ## Mobx
 
+# 函数式编程 JAVA 与 JAVAScript
+1. JAVAScript中可以直接传递函数的引用，JAVA中要传递函数则需要通过函数接口进行实现。
+2. JAVA中的柯里化可以用通过返回函数式接口进行实现。通常做法是new 一个函数接口实现函数的方式实现方法的返回，同时使用final声明持有上面方法变量的引用。
+
 # Others About JAVA
 1. java中有没有办法实现检查一下对象是否为空？为空返回一个动态代理过后的空对象，可以正常调用方法，但是不执行任何操作？
 
