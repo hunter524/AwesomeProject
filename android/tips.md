@@ -101,6 +101,15 @@ Dispatcher中的每一个Register的Action触发的Store更新的回调均会被
 
    - JS[函数式编程](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
 ## Mobx
+# 函数式编程
+普通的函数调用是从左侧向右侧进行调用。compose（组合）之后的函数便是从右侧向左侧进行调用。
+柯里化：柯里华之后的函数每次调用均只需要传入一个参数，每传入一个参数即是调用该方法最外层的一个方法，并返回一个函数接收第二个参数。
+
+## functor(函子)与Monad(单子)
+
+
++ 函子 态射
+
 
 # 函数式编程 JAVA 与 JAVAScript
 1. JAVAScript中可以直接传递函数的引用，JAVA中要传递函数则需要通过函数接口进行实现。
@@ -111,5 +120,11 @@ Dispatcher中的每一个Register的Action触发的Store更新的回调均会被
 
 目前看动态代理（只能代理接口）无法实现类，因此无法实现类似于Kotlin obj?.method()操作。
 
+2. java8 中可以实现函数式编程的逻辑 Stream相关API可以实现,map filter相关操作，Kotlin语言内置函数式编程相关操作的API。
+
 # JS Tips
 1. 每一个文件夹下的index.js为导入该文件夹时，默认导入的文件。
+
+#Linux工具 
+fio 读写测试
+gdebi 可视化安装软件
