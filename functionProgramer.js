@@ -109,8 +109,21 @@ console.log("同一律：",_r.map(mapfun) === mapfun);
 console.log(_r.map(mapfun)("2"),mapfun("2"));
 
 
-//concat 是拼接在参数的后面
+//concat 是拼接在concat(args) 参数的后面
 var whoIsHunter = _r.map(_r.compose(_r.concat("Hunter "),_r.concat("am ")));
 var whoIsHunter2 = _r.compose(_r.map(_r.concat("Hunter ")),_r.map(_r.concat("am ")))
 //同一律两次结果相同
 console.log(whoIsHunter("I"),whoIsHunter2("I"));
+
+var maybeOfmaybe = _f.maybe.of("maybe");
+console.log(maybeOfmaybe);
+var maybeOfundefined = _f.maybe.of(undefined);
+console.log(maybeOfundefined);
+var maybeOfmaybemaybe = _f.maybe.of(_f.maybe.of("recursive"));
+console.log(maybeOfmaybemaybe);
+//error
+// console.log(_r.chain(maybeOfmaybe,(v)=>'hello'+v).call());
+// var join = _r.join(maybeOfmaybe);
+// console.log(join(maybeOfmaybe));
+var joined = [1,2,3].join('-');
+console.log(joined);

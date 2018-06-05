@@ -102,25 +102,41 @@ Dispatcher中的每一个Register的Action触发的Store更新的回调均会被
    - JS[函数式编程](https://llh911001.gitbooks.io/mostly-adequate-guide-chinese/content/ch1.html)
 ## Mobx
 # 函数式编程
+
+##函数式编程 函数响应式编程 面向对象编程 命令式编程（面向过程式的编程）
+[函数式编程 与 函数响应式编程](https://halfrost.com/functional_reactive_programming_concept/)
+
 普通的函数调用是从左侧向右侧进行调用。compose（组合）之后的函数便是从右侧向左侧进行调用。
 柯里化：柯里华之后的函数每次调用均只需要传入一个参数，每传入一个参数即是调用该方法最外层的一个方法，并返回一个函数接收第二个参数。
 
+[函数式编程简单易懂的解释](http://www.ruanyifeng.com/blog/2017/02/fp-tutorial.html)
 ## functor(函子)与Monad(单子)
-
+函子 可能存在于多层的函子：Maybe(Maybe(Maybe(a)))
+单子 则是为单层的函子:Maybe(a),monad也是函子，是一个总返回单层的函子。
+monad单子：参考阮一峰的文章可以理解为对值的封装，并且能够提供一系列能够进行函数式操作的对象。柯里化是为了让所有函数只接收一个参数(目的是为了compose做函数合成时的方便，避免多个参数的适配的难度)
 
 + 函子 态射
 
+### 阮一峰博客 monad(单子) 与 functor(函子)
+
+- [functor（函子）](http://www.ruanyifeng.com/blog/2017/02/fp-tutorial.html)
+
+- [monad(单子)](http://www.ruanyifeng.com/blog/2015/07/monad.html)
+
+- [函子 单子 的图解](http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html#functors)
 
 # 函数式编程 JAVA 与 JAVAScript
 1. JAVAScript中可以直接传递函数的引用，JAVA中要传递函数则需要通过函数接口进行实现。
 2. JAVA中的柯里化可以用通过返回函数式接口进行实现。通常做法是new 一个函数接口实现函数的方式实现方法的返回，同时使用final声明持有上面方法变量的引用。
 
-# Others About JAVA
+# Others About JAVA AND Kotlin
 1. java中有没有办法实现检查一下对象是否为空？为空返回一个动态代理过后的空对象，可以正常调用方法，但是不执行任何操作？
 
 目前看动态代理（只能代理接口）无法实现类，因此无法实现类似于Kotlin obj?.method()操作。
 
 2. java8 中可以实现函数式编程的逻辑 Stream相关API可以实现,map filter相关操作，Kotlin语言内置函数式编程相关操作的API。
+
+3. Kotlin是可以实现函数式编程，柯里化相关的功能的。
 
 # JS Tips
 1. 每一个文件夹下的index.js为导入该文件夹时，默认导入的文件。
