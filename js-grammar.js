@@ -1578,7 +1578,50 @@ class Class {
         return a + b;
     }
 }
+function javaScriptGoodParts(){
+    /*
+    dddddddd
+     */
+    // console.log("上面的注释正常");
+    // console.log("下面的注释不正常,因此推荐优先使用行注释")
+    // /*
+    // var regex = /a*/.mathc(s);
+    //  */
+    var a = NaN;
+    console.log(isNaN(a));
+    var infinityFraction = -1/3;
+var string = /*"\"\b"*/ '\'';
+    console.log(infinityFraction,infinityFraction.toFixed(2),Math.abs(infinityFraction))
+    var person = {
+        name:'person',
+    };
 
+    var status = 'status';
+    switch (status){
+        case 'status':{
+            console.log('status');
+            //如果不break 则两个case均会执行
+            break;
+        }
+        case 'status':{
+            console.log('status')
+        }
+    }
+    delete person.name;
+    console.log(person.name);
+
+    var array = [1,2,3];
+    delete array[0];
+    console.log(array,array.length,array[0]);
+    //一个方法的标记 指示其是一个function
+    console.log(typeof javaScriptGoodParts);
+
+    label:{
+        console.log("block statement 1");
+        break label;
+        console.log("can not reach statement 1");
+    }
+}
 // hello(new Class());
 // letfunc()
 // destructuringFunc()
@@ -1601,4 +1644,5 @@ class Class {
 // asyncFeature();
 // strictFeature();
 // objectFunction();
-functionProgramer();
+// functionProgramer();
+javaScriptGoodParts()
