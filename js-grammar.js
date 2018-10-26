@@ -1594,7 +1594,13 @@ var string = /*"\"\b"*/ '\'';
     console.log(infinityFraction,infinityFraction.toFixed(2),Math.abs(infinityFraction))
     var person = {
         name:'person',
+        'name2':'person2',
+        'undefined':undefined,
     };
+
+    person.age = 21;
+
+    console.log(person.name2);
 
     var status = 'status';
     switch (status){
@@ -1621,6 +1627,49 @@ var string = /*"\"\b"*/ '\'';
         break label;
         console.log("can not reach statement 1");
     }
+
+    console.log("cat match : ","cat".match(/c/),typeof /c/);
+    person.function=function(){
+        console.log("from function")
+        this.functionInFunction = function () {
+            console.log('functionInFunction')
+        }
+    };
+    person.function();
+
+    //function 内部无法定义function
+    //函数调用模式其this 指向的是global全局变量
+     function Func(){
+        console.log("from function");
+        this.functionInFunction = function () {
+            console.log('functionInFunction')
+        }
+    };
+    // 使用new 则创建了一个自己的对象域 (构造器调用)
+    var func = new Func();
+    console.log(typeof func.functionInFunction);
+
+    //调用之前全局域不会有一个函数叫functionInFunction
+    //调用完Func() 之后全局域则有一个函数叫 functionInFunction
+    //函数调用模式
+    console.log("functionInFunction in global:",typeof functionInFunction);
+    Func();
+    console.log("functionInFunction in global:",typeof functionInFunction);
+
+    for (var k in person){
+        console.log('k:',k,'v:',person[k])
+    }
+
+    console.log("function typeof function",typeof person.function === 'function');
+
+    person.children=[{name:'son',age:1},{name:'daughter',age:5}];
+
+    console.log(JSON.stringify(person));
+
+    //毫秒时间0 从该时间点开始
+    var timeMillins = Date.parse('1970-01-01 08:00:00:000');
+    console.log(timeMillins)
+
 }
 // hello(new Class());
 // letfunc()
